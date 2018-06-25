@@ -148,9 +148,11 @@ def send_help(bot, update):
 
 
 def send_message(bot, update):
-    if not random.randint(0, 3):
-        chat_id = str(update.message.chat.id)
-        stickers = open(STICKERS_DIR + chat_id, 'r').readlines()
+    chat_id = str(update.message.chat.id)
+    stickers_file_name = STICKERS_DIR + chat_id
+    stickers_file_exists = os.path.isfile(stickers_file_name)
+    if not random.randint(0, 3) and stickers_file_exists:
+        stickers = open(stickers_file_name, 'r').readlines()
         update.message.reply_sticker(random.choice(stickers)[:-1])
     else:
         message_out = get_message(update)
