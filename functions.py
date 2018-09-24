@@ -97,6 +97,8 @@ def reply_to_message(bot, update):
             reply_to = update.message.reply_to_message.from_user.username
     if name_in(update.message.text) or reply_to == bot_name:
         if u'или' in update.message.text.split():
+            redata = re.compile(re.escape(u'ты'), re.IGNORECASE)
+            update.message.text = redata.sub(u'я', update.message.text)
             out = []
             for words in update.message.text.replace(u'?', u'').split(u','):
                 for word in words.split(u'или'):
